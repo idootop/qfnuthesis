@@ -1,0 +1,157 @@
+%---------------------------------------------------------------------------%
+%-                                                                         -%
+%-                        User-defined Commands                            -%
+%-                                                                         -%
+%---------------------------------------------------------------------------%
+%->> Identification
+%---------------------------------------------------------------------------%
+\NeedsTeXFormat{LaTeX2e}%
+\ProvidesPackage{custom}[2014/10/01 v1.0 LaTeX macros package]%
+%---------------------------------------------------------------------------%
+%->> Declare options
+%---------------------------------------------------------------------------%
+%-
+%-> Handle non-implemented options
+%-
+\DeclareOption*{%
+    \PackageWarning{custom}{Unknown option '\CurrentOption'}%
+}
+%-
+%-> Terminates all options processing
+%-
+\ProcessOptions\relax%
+%---------------------------------------------------------------------------%
+%->> User added packages
+%---------------------------------------------------------------------------%
+%- this part adds normal packages
+%---------------------------------------------------------------------------%
+%->> User defined commands
+%---------------------------------------------------------------------------%
+\def\d{\mathop{}\!\mathrm{d}} %-- 一阶微分符号d
+\def\l{\lambda}\def\L{\Lambda}
+\def\D{\Delta}
+\def\de{\delta}
+\def\gm{\gamma}
+\def\a{\alpha}
+\def\b{\beta}
+\def\div{{\rm div}}
+%封面
+\newcommand{\makecover}{
+  \thispagestyle{empty}
+  \vskip 1ex
+  \begin{center}
+  \rotatebox{360}{{\includegraphics[width =7.41cm]{Img/qfnu.pdf}}}
+  \end{center}
+  \vskip 1cm
+  \begin{center}
+  \textbf{\xiaochuhao\myfont{方正姚体} 本科生毕业论文（设计）}
+  \end{center}
+  \vskip 1cm
+  \begin{center}
+  \rotatebox{360}{{\includegraphics[width =3cm]{Img/qfnu_logo.pdf}}}
+  \end{center}
+  \vskip 2cm
+  \begin{table}[htbp]
+  \centering
+  \begin{tabular}{p{64pt}>{\centering\arraybackslash}p{300pt}}
+  \rule{0pt}{1.2cm}{\myfont{方正姚体}\sanhao   题\hspace{31.5pt}目} &{\myfont{方正姚体}\sanhao  \theTitle}\\ \cline{2-2}
+  \rule{0pt}{1.0cm}{\myfont{方正姚体}\sanhao   姓\hspace{31.5pt}名} &
+  {\begin{tabular}{>{\centering\arraybackslash}p{134pt}p{32pt}>{\centering\arraybackslash}p{104pt}}
+  {\myfont{方正姚体}\sanhao   \theAuthor }&{\myfont{方正姚体}\sanhao   学号}&  {\myfont{方正姚体}\sanhao    \theNo} \\\cline{1-1}\cline{3-3}
+  \end{tabular}}\\
+  \rule{0pt}{1.2cm}{\myfont{方正姚体}\sanhao   院\hspace{31.5pt}系} &{\myfont{方正姚体}\sanhao \theInstitution}\\ \cline{2-2}
+  \rule{0pt}{1.2cm}{\myfont{方正姚体}\sanhao   专\hspace{31.5pt}业} &{\myfont{方正姚体}\sanhao \theMajor}\\ \cline{2-2}
+  \rule{0pt}{1.2cm}{\myfont{方正姚体}\sanhao   指导教师} &
+  {\begin{tabular}{>{\centering\arraybackslash}p{134pt}p{32pt}>{\centering\arraybackslash}p{104pt}}
+  {\myfont{方正姚体}\sanhao   \theTutor }&{\myfont{方正姚体}\sanhao   职称}&  {\myfont{方正姚体}\sanhao   \theProTitle}  \\\cline{1-1}\cline{3-3}
+  \end{tabular}}\\
+  \end{tabular}
+  \end{table}
+  \vskip 1cm
+  \begin{center}
+  {\myfont{方正姚体}\sanhao   \theDate}
+  \end{center}
+  \begin{center}
+  {\myfont{方正姚体}\sanhao  曲阜师范大学教务处制}
+  \end{center}
+  \newpage
+}
+%目录
+\newcommand{\makecontents}{
+  \vskip 2cm
+  \tableofcontents  %-- 生成目录---
+  \thispagestyle{empty}
+  \newpage
+  \pagestyle{plain}
+  \setcounter{page}{1}
+}
+%摘要
+\newcommand{\summary}[1]{
+  %将摘要加入到目录中
+  \phantomsection\addcontentsline{toc}{section}{摘要}
+  \noindent{\heiti \, 摘要}: #1 \\
+}
+\newcommand{\summaryen}[1]{
+  \phantomsection\addcontentsline{toc}{section}{Abstract}
+  \noindent\textbf{\, Abstract}: #1 \\
+}
+%关键词
+\newcommand{\keywords}[1]{
+  \phantomsection\addcontentsline{toc}{section}{关键词}
+  \noindent{\heiti 关键词}: #1
+}
+\newcommand{\keywordsen}[1]{
+  \phantomsection\addcontentsline{toc}{section}{Key words}
+  \noindent\textbf{Key words}: #1
+}
+%生成头部
+\newcommand{\makeheader}{
+  %论文首页标题信息
+  \vskip 2cm
+  \begin{center}
+    \sanhao \heiti \theTitle
+  \end{center}
+  \setlength{\parskip}{1ex plus 0.5ex minus 0.2ex}
+  {\fangsong
+    \begin{center}
+      \theMajor  \quad \theAuthor
+    \end{center}
+    \begin{center}
+      指导教师  \quad \theTutor
+    \end{center}
+  }
+  %论文摘要/关键词
+  {\wuhao
+    \summary{\theSummary}
+    \keywords{\theKeywords}
+  }
+  %论文摘要/关键词
+  \begin{center}
+    {\sanhao\theEngTitle}
+  \end{center}
+  \begin{center}
+    \theEnMajor \quad\quad\theEnName
+  \end{center}
+  \begin{center}
+    Tutor\quad\quad\theEnTutor
+  \end{center}
+  {\wuhao
+    \summaryen{\theSummaryen}
+    \keywordsen{\theKeywordsen}
+  }
+  \vskip 1cm
+}
+%参考文献
+\newcommand{\references}[1]{
+  \renewcommand\refname{\heiti \xiaosihao 参考文献}
+  \phantomsection\addcontentsline{toc}{section}{参考文献}
+  \begin{thebibliography}{100}
+  \wuhao #1
+  \end{thebibliography}
+}
+%--------------------------------------------
+%    请在此处添加自定义命令
+%--------------------------------------------
+
+%---------------------------------------------------------------------------%
+\endinput
